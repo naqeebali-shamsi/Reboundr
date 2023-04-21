@@ -11,13 +11,16 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [19.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    defaults:
+      run:
+        working-directory: frontend/
 
     steps:
     - uses: actions/checkout@v2
@@ -27,14 +30,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd frontend/
-    - run: npm i --legacy-peer-deps
 
-    - run: CI=false npm run build --if-present
+    - name: Install dependencies
+      run: npm ci --legacy-peer-deps --cache ./node_modules/.cache --prefer-offline
+
+    - name: Build
+      run: CI=false npm run build --if-present
 
     - name: Netlify Deploy
-      # uses: jsmrcaga/action-netlify-deploy@v1.7.1
-
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
