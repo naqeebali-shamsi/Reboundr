@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const config = require('../config');
+
+mongoose.connect(config.mongodb.uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const jobSchema = new mongoose.Schema({
   title: {

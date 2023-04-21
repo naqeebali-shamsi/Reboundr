@@ -112,11 +112,13 @@ export default function ResetPassword() {
           setSuccess(navigate("/"));
         })
         .catch((error) => {
+          alert(error.response.data.message);
+          window.location.reload();
           console.log(error);
         });
       setSuccess("password reset successful");
       notifys();
-      setSuccess(navigate("/"));
+      // setSuccess(navigate("/"));
       return;
     }
     else { 

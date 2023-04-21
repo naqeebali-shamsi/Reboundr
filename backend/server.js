@@ -10,10 +10,13 @@ const interview = require('./routes/interview');
 const networking = require('./routes/networking');
 const profilepage = require('./routes/profilepage');
 
-const MONGO_URI = process.env.DATABASE_URL;
+const config = require('./config');
+
+const MONGO_URI = config.mongodb.uri;
 
 const cors = require('cors');
 const flash = require('connect-flash');
+
 
 const app = express();
 const port = 5000;
@@ -45,7 +48,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const whitelist = ["http://localhost:3000", "https://heroic-gelato-4e66ef.netlify.app", "https://reboundr.netlify.app"]
+const whitelist = ["http://localhost:3000"]
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -70,4 +73,4 @@ app.use('/api', resetroute);
 app.use('/api', skillsroutes);
 app.use('/api', profilepage);
 
-app.listen(port, () => console.log(`Reboundr listening on port ${port}!`));
+app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));

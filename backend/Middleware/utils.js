@@ -1,5 +1,5 @@
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const config = require('../config');
 const Question = require('../Models/MockInterview/Question');
 
 
@@ -27,7 +27,7 @@ async function isAuthenticated(req, res, next) {
     if (authHeader) {
         const token = authHeader.split(' ')[1];
 
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(token, config.jwt.secret, (err, decoded) => {
             if (err) {
                 console.error('Error in isAuthenticated:', err); // Add this line to log the error
                 return res.status(403).json({ message: 'Forbidden' });

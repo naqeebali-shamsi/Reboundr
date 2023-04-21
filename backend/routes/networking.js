@@ -26,6 +26,7 @@ router.get('/userdetails/:email', (req, res) => {
   
 
   router.get('/userdetails', (req, res) => {
+    console.log("hjehwjewwejhjherje")
     UserDetails.find()
       .exec()
       .then(userdetails => {

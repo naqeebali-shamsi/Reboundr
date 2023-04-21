@@ -1,12 +1,11 @@
 //Authors: Mounisha Soudaboina, Naqeebali Shamsi
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Avatar, CssBaseline, Typography, OutlinedInput, TextField, InputAdornment, FormControl, FormControlLabel, InputLabel, IconButton, Button, Checkbox, Alert, Stack, Link, Paper, Box, Grid } from "@mui/material";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LoginIcon from '@mui/icons-material/Login';
-import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import config from '../config';
 import { AuthContext } from "../context/AuthContext";
@@ -14,8 +13,25 @@ import { AuthContext } from "../context/AuthContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { createClient } from 'pexels';
+
+const pexels_client = createClient(config.pexels_apiKey);
+
 const notifys = (msg) => {
     toast.success(msg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+}
+
+const notifyf = (msg) => {
+    toast.error(msg, {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -45,6 +61,14 @@ const isEmail = (email) =>
 
 
 export default function LandingPage() {
+    const [image, setImage] = useState('');
+    useEffect(() => {
+        pexels_client.photos.search({ query: 'career', per_page: 100 }).then(photos => {
+            console.log(photos);
+            setImage(photos.photos[Math.floor(Math.random() * photos.per_page)].src.original);
+        });
+    }, []);
+
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -88,6 +112,7 @@ export default function LandingPage() {
     };
 
     const handleSubmit = () => {
+        setIsLoading(true);
         setSuccess(null);
 
         if (emailError || !emailInput) {
@@ -110,11 +135,13 @@ export default function LandingPage() {
                 setUser(response.data.id);
                 setToken(response.data.token);
                 setUserType(response.data.userType);
-                notifys('Logged in successfully !!!');
+                notifys('Logged in successfully!');
+                setIsLoading(false);
                 setSuccess(navigate('/posts'))
 
             }).catch((err) => {
-                console.log(err);
+                setIsLoading(false);
+                notifyf('Invalid credentials');
             })
     };
     const [open, setOpen] = useState(false);
@@ -132,7 +159,7 @@ export default function LandingPage() {
                 sm={4}
                 md={7}
                 sx={{
-                    backgroundImage: 'url(https://source.unsplash.com/category/career)',
+                    backgroundImage: `url(${image})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (t) =>
                         t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -232,6 +259,9 @@ export default function LandingPage() {
                                 </Button>
                             </Grid>
                         </Grid>
+                        <Box sx={{ display: "flex", justifyContent: "center" }}>
+                            {isLoading && <CircularProgress sx={{ mt: 2 }} />}
+                        </Box>
                         <Copyright sx={{ mt: 5 }} />
                         {formValidation && (
                             <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
@@ -248,13 +278,6 @@ export default function LandingPage() {
                                 </Alert>
                             </Stack>
                         )}
-                        <Backdrop
-                            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                            open={isLoading}
-                            onClick={handleClose}
-                        >
-                            <CircularProgress color="inherit" />
-                        </Backdrop>
                     </Box>
                 </Box>
             </Grid>

@@ -1,8 +1,8 @@
-require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const config = require('../config');
 const User = require('../Models/User');
 const bcrypt = require('bcrypt');
 
@@ -12,14 +12,15 @@ router.post('/login', (req, res, next) => {
       return res.status(400).json({ message: err });
     }
     if (!user) {
-      return res.status(401).json({ message: info.message }); 
+      return res.status(401).json({ message: info.message });
     }
     req.login(user, { session: false }, (err) => {
       if (err) {
         return next(err);
       }
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      return res.status(200).json({ message: 'Login successful.', token, id: user._id, userType: user.userType, user });
+      const token = jwt.sign({ id: user._id }, config.jwt.secret, { expiresIn: '1h' });
+      // return res.status(200).json({ message: 'Login successful.', token });
+      return res.status(200).json({ message: 'Login successful.', token, id: user._id, userType: user.userType });
     });
   })(req, res, next);
 });
@@ -49,10 +50,9 @@ router.post('/register', async (req, res) => {
 });
 
 // logout route
-router.get('/logout', function(req, res, next) {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-  });
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = router;
