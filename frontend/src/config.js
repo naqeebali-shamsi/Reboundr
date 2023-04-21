@@ -1,8 +1,6 @@
 const config = {
-    // baseUrl: 'https://reboundr-backend.onrender.com/api',
-    baseUrl: 'http://localhost:5000/api',
-    pexels_apiKey: 'tFsHrpRjmOQgdiZrRO8UWD3USoiFPzBwi9bfzlAL5A72MIgZjzGjGkzR'
-   
+    baseUrl: process.env.REACT_APP_BASE_URL,
+    pexels_apiKey: process.env.REACT_APP_PEXELS_API_KEY,
 }
 
 export default config;
