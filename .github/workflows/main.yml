@@ -26,7 +26,18 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-
+        
+    - name: Cache node modules
+      id: cache-node-modules
+      uses: actions/cache@v2
+      with:
+        path: frontend/node_modules
+        key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+          
     - name: Install dependencies
       run: npm ci --legacy-peer-deps --cache ./node_modules/.cache --prefer-offline
       working-directory: frontend/
@@ -40,4 +51,3 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       run: netlify deploy --prod
-      working-directory: frontend/
