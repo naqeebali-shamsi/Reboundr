@@ -18,28 +18,26 @@ jobs:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
+    defaults:
+      run:
+        working-directory: frontend/
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Clear npm cache
-        run: npm cache clean --force
+    - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        working-directory: frontend/
-        run: npm ci --legacy-peer-deps --cache ./node_modules/.cache --prefer-offline
+    - name: Install dependencies
+      run: npm ci --legacy-peer-deps --cache ./node_modules/.cache --prefer-offline
 
-      - name: Build
-        working-directory: frontend/
-        run: CI=false npm run build --if-present
+    - name: Build
+      run: CI=false npm run build --if-present
 
-      - name: Netlify Deploy
-        working-directory: frontend/
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: netlify deploy --prod
+    - name: Netlify Deploy
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      run: netlify deploy --prod
