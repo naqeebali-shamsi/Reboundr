@@ -48,7 +48,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const whitelist = ["http://localhost:3000", "https://rebounder.netlify.app/"]
+const whitelist = ["http://localhost:3000", "https://rebounder.netlify.app"]
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
