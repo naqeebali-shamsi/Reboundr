@@ -31,13 +31,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      run: npm ci --legacy-peer-deps --cache ./node_modules/.cache --prefer-offline
+      run: npm ci --legacy-peer-deps
 
     - name: Build
       run: CI=false npm run build --if-present
 
     - name: Netlify Deploy
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      run: netlify deploy --prod
+      run: netlify deploy --dir "build" --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }} --prod
