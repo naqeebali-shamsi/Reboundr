@@ -45,4 +45,10 @@ jobs:
       run: echo "$(cat .env)" 
 
     - name: Netlify Deploy
-      run: netlify deploy --dir "build" --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }} --prod
+      env:
+        REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+        REACT_APP_PEXELS_API_KEY: ${{ secrets.REACT_APP_PEXELS_API_KEY }}
+      run: |
+        echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL"
+        echo "REACT_APP_PEXELS_API_KEY=$REACT_APP_PEXELS_API_KEY"
+        netlify deploy --dir "build" --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }} --prod
