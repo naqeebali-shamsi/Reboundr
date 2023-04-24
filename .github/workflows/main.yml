@@ -36,19 +36,9 @@ jobs:
     - name: Build
       run: CI=false npm run build --if-present
       
-    - name: Set environment variables
-      run: |
-        echo "REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env
-        echo "REACT_APP_PEXELS_API_KEY=${{ secrets.REACT_APP_PEXELS_API_KEY }}" >> .env
-        
-    - name: Check environment variables
-      run: echo "$(cat .env)" 
-
     - name: Netlify Deploy
       env:
-        REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
-        REACT_APP_PEXELS_API_KEY: ${{ secrets.REACT_APP_PEXELS_API_KEY }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       run: |
-        echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL"
-        echo "REACT_APP_PEXELS_API_KEY=$REACT_APP_PEXELS_API_KEY"
-        netlify deploy --dir "build" --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }} --prod
+        netlify deploy --dir "build" --prod --auth "$NETLIFY_AUTH_TOKEN" --site "$NETLIFY_SITE_ID" --env "REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }},REACT_APP_PEXELS_API_KEY=${{ secrets.REACT_APP_PEXELS_API_KEY }}"
