@@ -41,4 +41,4 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       run: |
-        netlify deploy --dir "build" --prod --auth "$NETLIFY_AUTH_TOKEN" --site "$NETLIFY_SITE_ID" --env "REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }},REACT_APP_PEXELS_API_KEY=${{ secrets.REACT_APP_PEXELS_API_KEY }}"
+        netlify deploy --dir "build" --prod --auth "$NETLIFY_AUTH_TOKEN" --site "$NETLIFY_SITE_ID" -e "REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }},REACT_APP_PEXELS_API_KEY=${{ secrets.REACT_APP_PEXELS_API_KEY }}"
