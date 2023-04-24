@@ -40,6 +40,9 @@ jobs:
       run: |
         echo "REACT_APP_BASE_URL=${{ secrets.REACT_APP_BASE_URL }}" >> .env
         echo "REACT_APP_PEXELS_API_KEY=${{ secrets.REACT_APP_PEXELS_API_KEY }}" >> .env
+        
+    - name: Check environment variables
+      run: echo "$(cat my_file.txt)" 
 
     - name: Netlify Deploy
       run: netlify deploy --dir "build" --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }} --prod
