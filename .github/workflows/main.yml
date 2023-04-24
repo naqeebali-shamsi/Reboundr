@@ -39,7 +39,4 @@ jobs:
       run: ls -ll
 
     - name: Netlify Deploy
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      run: netlify deploy --dir "build" --auth "6yp_y8kmL0GZ5u4VHKxgCLh38cs0Youmy--xCdAkHXA" --site "47ec90c2-1a07-4b84-9f66-ee1ceee1492d" --prod
+      run: netlify deploy --dir "build" --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }} --prod
