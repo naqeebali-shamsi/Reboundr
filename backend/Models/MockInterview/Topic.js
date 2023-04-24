@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const topicSchema = new mongoose.Schema({
-  name: {
-    type: String,
+  topics: {
+    type: Array,
     required: true,
     unique: true,
   },

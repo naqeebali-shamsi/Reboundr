@@ -1,4 +1,4 @@
-//Author: Dishank Jitendra Jani (B00917756)
+//Author: Dishank Jani B00917756
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,7 +12,7 @@ import axios from "axios";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import CreatePost from './CreatePost';
-import { Box, Modal } from '@mui/material';
+import { Box, Modal, CircularProgress } from '@mui/material';
 
 
 const style = {
@@ -30,27 +30,38 @@ export default function Profilesection(props) {
   const handleClose = () => setOpen(false);
 
   const navigate = useNavigate();
+  const [userData,setUserData] = useState('')
   const [result, setresult] = useState([]);
-  let _id = '';
+  const [loading, setLoading] = useState(true); // loading state
 
   //getting authenticated user's information
   useEffect(() => {
-    _id = localStorage.getItem('user')
-    console.log(_id);
+    setUserData(localStorage.getItem('user'))
+    console.log(userData);
 
     fetchData();
 
-  }, []);
-//fetching data of user using Id
+  }, [userData]);
+  
+  //fetching data of user using Id
   const fetchData = async () => {
-    var url = `${config.baseUrl}/getUserProfileDetails/` + _id
+    var url = `${config.baseUrl}/getUserProfileDetails/` + userData
     console.log(url)
-    axios.get(url)
-      .then(json => setresult(json.data))
+    try {
+      const response = await axios.get(url);
+      setresult(response.data);
+      setLoading(false); // set loading to false once the data is fetched
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const profileClick = () => {
     navigate('/profilepage');
+  }
+
+  if (loading) { // display spinner while loading
+    return <CircularProgress />;
   }
 
   return (
@@ -93,4 +104,3 @@ export default function Profilesection(props) {
     })
   );
 }
-

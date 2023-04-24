@@ -103,7 +103,7 @@ const Registration = () => {
     else {
       setPasswordError(false);
       notifys();
-      setSuccess(navigate("/"));
+      // setSuccess(navigate("/"));
       
       axios.post(`${config.baseUrl}/register`, {
         firstName: firstName,
@@ -123,6 +123,8 @@ const Registration = () => {
           setSuccess(navigate("/"));
         })
         .catch((error) => {
+          alert(error.response.data.message);
+          window.location.reload();
           console.log(error);
         });
     }

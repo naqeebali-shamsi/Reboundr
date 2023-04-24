@@ -1,11 +1,13 @@
-require('dotenv').config();
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const { Configuration, OpenAIApi } = require("openai");
+const config = require('../config');
 const utils = require('../Middleware/utils');
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_KEY,
+    apiKey: config.openai.apiKey,
 });
 const Interview = require('../Models/MockInterview/Interview');
 const Topic = require('../Models/MockInterview/Topic');
@@ -126,12 +128,13 @@ router.post('/evaluate', isAuthenticated, async (req, res) => {
 
             const output = response.data.choices[0].text;
             const lines = output.split('\n');
-            const ratingRegex = /\b(\d+(?:\.\d+)?)(?:\/(\d+(?:\.\d+)?))?/;
-            const ratingMatch = lines.find(line => ratingRegex.test(line));
-            const rating = ratingMatch ? ratingMatch.match(ratingRegex)[0] : null;
-            const evaluationRegex = /^\s*(?<rating>\d+(?:\.\d+)?)(?:\/\d+)?\s*(?<evaluation>[\s\S]+)?/;
+            const rating = lines.find(line => line.match(/\d+(\.\d+)?\/\d+/));
+            const evaluationRegex = /^\s*(\d+(?:\.\d+)?)\/\d+\s*(?<evaluation>[\s\S]+)/;
             const match = output.match(evaluationRegex);
             const evaluation = match?.groups?.evaluation?.trim() ?? '';
+
+
+
             const res = await openai.createCompletion({
                 model: 'text-davinci-003',
                 prompt: res_prompt,
@@ -145,8 +148,10 @@ router.post('/evaluate', isAuthenticated, async (req, res) => {
                 rating: rating,
                 evaluation: evaluation,
                 reference: res.data.choices[0].text,
+                output: output,
             });
         }
+
         res.status(200).json(results);
     } catch (error) {
         console.error('Error in POST /evaluate:', error);

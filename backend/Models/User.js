@@ -1,6 +1,11 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const config = require('../config');
+
+mongoose.connect(config.mongodb.uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -35,7 +40,7 @@ const UserSchema = new mongoose.Schema({
   }, 
   image: {
     type: String,
-    default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+    default: "http://cliparts.co/cliparts/Bcg/rng/Bcgrngy7i.png"
   },
   employment:[{
           eid: String,

@@ -112,6 +112,11 @@ function PrimaryAppBar() {
     };
   }
 
+  const postpage = () => {
+    navigate("/posts");
+  };
+
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -121,7 +126,7 @@ function PrimaryAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={postpage}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },

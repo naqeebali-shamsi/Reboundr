@@ -171,7 +171,7 @@ export default function UpdateProfileData(){
                         <Typography>Update your Bio:</Typography>
                         <hr />
                         <TextField sx={{paddingRight: '1%'}} value={bio} onChange= {getBio} label='Add Bio Here:'/>
-                        <Button sx={{float: "right", backgroundColor: "#264653", color: "white"}} variant="outlined" component="span" onClick={addBioDetails}>Add Bio</Button>
+                        <Button sx={{float: "right", backgroundColor: "white", color: "#264653"}} variant="outlined" component="span" onClick={addBioDetails}>Update Bio</Button>
                     </CardContent>
 
                     <CardContent sx={{marginTop: '2%'}}>
@@ -181,7 +181,7 @@ export default function UpdateProfileData(){
                         Start Date: <TextField sx={{paddingRight: '1%'}} value={startDate} type='date' onChange = {getStartDate}/>
                         End Date: <TextField sx={{paddingRight: '1%'}} value={endDate} type='date' onChange = {getEndDate}/>
                         <TextField label='Task Details:' value={taskText} onChange= {getTastText}/>
-                        <Button sx={{alignSelf: 'right', float: 'right', backgroundColor: "#264653", color: "white"}} variant="outlined" component="span" onClick={companyDetails}>Add Employments Details</Button>
+                        <Button sx={{alignSelf: 'right', float: 'right', backgroundColor: "white", color: "#264653"}} variant="outlined" component="span" onClick={companyDetails}>Add Employments Details</Button>
                     </CardContent>
 
                     <CardContent sx={{marginTop: '2%'}}>
@@ -191,7 +191,7 @@ export default function UpdateProfileData(){
                         Start Date: <TextField sx={{paddingRight: '1%'}} value={projectStart} type='date' onChange = {getProjectStartDate}/>
                         End Date: <TextField sx={{paddingRight: '1%'}} value={projectEnd} type='date' onChange = {getProjectEndDate}/>
                         <TextField label='Task Details:' value={projectTask} onChange= {getProjectTask}/>
-                        <Button sx={{alignSelf: 'right', float: 'right', backgroundColor: "#264653", color: "white"}} variant="outlined" component="span" onClick={projectDetails}>Add Employments Details</Button>
+                        <Button sx={{alignSelf: 'right', float: 'right', backgroundColor: "white", color: "#264653"}} variant="outlined" component="span" onClick={projectDetails}>Add Employments Details</Button>
                     </CardContent>
                     <br />
                     <CardContent sx={{float: "right"}}>

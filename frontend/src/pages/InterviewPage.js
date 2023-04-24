@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, FormControl, Select, MenuItem, InputLabel, Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import { topics } from '../components/MockInterview/TopicAutoComplete';
 import MockInterviewTitle from '../components/MockInterview/MockInterviewTitle';
 import ConfirmDialog, { confirmDialog } from '../components/ConfirmDialog';
+import config from '../config';
+import axios from 'axios';
 
 
 const InterviewPage = (props) => {
+  const [topics, setTopics] = useState([]);
   const [topic, setTopic] = useState('');
+  useEffect(() => {
+    axios.get(`${config.baseUrl}/topics`,)
+      .then((response) => {
+        setTopics(response.data[0].topics);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  
   const [difficulty, setDifficulty] = useState('easy');
   const [numberOfQuestions, setNumberOfQuestions] = useState(1);
   const [error, setError] = useState(false);
@@ -51,7 +63,7 @@ const InterviewPage = (props) => {
               name="topic"
               options={topics}
               sx={{ width: 300 }}
-              onChange={(event,value) => setTopic(value)}
+              onChange={(event, value) => setTopic(value)}
               renderInput={(params) => <TextField {...params} label="Topic" required />}
             />
           </Box>
@@ -78,6 +90,7 @@ const InterviewPage = (props) => {
               type="number"
               value={numberOfQuestions}
               onChange={handleChange}
+              inputProps={{ min: 1 }}
               fullWidth
             />
           </Box>

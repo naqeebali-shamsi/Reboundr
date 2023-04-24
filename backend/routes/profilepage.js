@@ -23,27 +23,6 @@ router.put('/addProjectDetails/:_id', (req, res) => {
       console.log(err)
     })
   });
-
-  // profile add employment details
-router.put('/addEmployeeDetails/:_id', (req, res) => {
-  var _id = req.params._id;
-  var length;
-  
-  User.find({_id: _id}, 'employment').then((result) => {
-    length = result.length
-    console.log(result)
-  })
-
-  User.findOneAndUpdate({_id: _id}, {$push: {
-    project: req.body
-  }}).then((result) => {
-    res.status(300).json({
-      message: "Data added",
-    })
-  }).catch((err) => {
-    console.log(err)
-  })
-});
   
   // upload profile photo
   router.put('/addProfilePhoto/:_id', (req, res) => {

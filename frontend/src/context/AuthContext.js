@@ -4,16 +4,16 @@ const cookies = new Cookies();
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-
+    const initializeState = () => !!localStorage.getItem("token");
+    const [token, setToken] = useState(initializeState);
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
     const [userType, setUserType] = useState(null);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         const storedUserType = localStorage.getItem("userType");
-        const storedToken =  localStorage.getItem("token") || cookies.get("token");
+        const storedToken = localStorage.getItem("token") || cookies.get("token");
         const storedUserData = localStorage.getItem("userData");
         if (storedUser && storedUserType) {
             setUser(storedUser);

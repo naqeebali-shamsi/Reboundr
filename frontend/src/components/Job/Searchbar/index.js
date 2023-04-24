@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, Button, Select, MenuItem, Container, TextField } from "@mui/material";
+import { Box, Button, Select, MenuItem, Container, TextField, InputAdornment, IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import { makeStyles } from '@mui/styles';
 import { useEffect } from "react";
 
@@ -9,7 +10,7 @@ const useStyles = makeStyles({
         boxShadow: "0px 1px 5px rgba(0,0,0,0.1)",
         borderRadius: "5px",
         "& > *": {
-            flex: 1, 
+            flex: 1,
             height: "45px",
             margin: "8px",
         },
@@ -27,7 +28,7 @@ function Search(props) {
         location: 'Remote'
     });
     const handleChange = (e) => {
-        setJobSearch(oldState => ({...oldState, [e.target.name]: e.target.value}))
+        setJobSearch(oldState => ({ ...oldState, [e.target.name]: e.target.value }))
     }
 
     // Handling props for searching
@@ -35,34 +36,57 @@ function Search(props) {
     const handleSearchValue = (e) => {
         setSearchvalue(e.target.value)
     }
+    const removeSearchFilters = () => {
+        props.clearFilters();
+        setSearchvalue('');
+    }
 
     useEffect(() => {
         props.fetchSearchedJob(searchValue);
     })
 
     const classes = useStyles()
-    return(
+    return (
         <>
             <Container component="main">
-            <Box p={2} mt={-5} mb={2} className={classes.wrapper} alignItems="center" display="flex" justifyContent="space-between">
-                <Select onChange={handleChange} value={jobSearch.type} name="type"> 
-                    <MenuItem value="Full time">Full time</MenuItem>
-                    <MenuItem value="Part time">Part time</MenuItem>
-                    <MenuItem value="Contract">Contract</MenuItem>
-                </Select>
-                <Select onChange={handleChange} value={jobSearch.location} name="location"> 
-                    <MenuItem value="Remote">Remote</MenuItem>
-                    <MenuItem value="In-Office">In-Office</MenuItem>
-                </Select>
-                <Button onClick={search} variant="contained" color="primary" disableElevation>Search</Button>
-            </Box>
-            <Box display="flex" justifyContent="center">
-                <TextField color="secondary" focused  label="Type to search for any Job ..." 
-                variant="outlined" size="medium" sx={{width: 600}} id="outlined-basic" name="input" 
-                value={searchValue} onChange={handleSearchValue}></TextField>
-            </Box>
-            <Box display="flex" justifyContent="flex-end">
-            </Box>
+                <Box p={2} mt={-5} mb={2} className={classes.wrapper} alignItems="center" display="flex" justifyContent="space-between">
+                    <Select onChange={handleChange} value={jobSearch.type} name="type">
+                        <MenuItem value="Full time">Full time</MenuItem>
+                        <MenuItem value="Part time">Part time</MenuItem>
+                        <MenuItem value="Contract">Contract</MenuItem>
+                    </Select>
+                    <Select onChange={handleChange} value={jobSearch.location} name="location">
+                        <MenuItem value="Remote">Remote</MenuItem>
+                        <MenuItem value="In-Office">In-Office</MenuItem>
+                    </Select>
+                    <Button onClick={search} variant="contained" color="primary" disableElevation>Search</Button>
+                </Box>
+                <Box display="flex" justifyContent="center">
+                    <TextField
+                        color="primary"
+                        focused
+                        label="Type to search for any Job ..."
+                        variant="outlined"
+                        size="medium"
+                        sx={{ width: 600 }}
+                        id="outlined-basic"
+                        name="input"
+                        value={searchValue}
+                        onChange={handleSearchValue}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={() => removeSearchFilters()}>
+                                        <CloseIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+
+                </Box>
+                <Box display="flex" justifyContent="flex-end">
+                </Box>
             </Container>
         </>
     )

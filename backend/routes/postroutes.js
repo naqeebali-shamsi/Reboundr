@@ -2,44 +2,42 @@ const Posts = require("../Models/Posts");
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require("../Models/User");
-//multer js used for handling file uploads in node js
-const multer = require('multer');
-
-const upload = multer({dest: __dirname + "/uploads"});
-
-router.post('/posts/add', upload.single("file"), async (req, res, next) => {
-
-  if(req.body?.Name && req.body?.description && req.file){
 
 
-    const post = new Posts({
-      _id: new mongoose.Types.ObjectId(),
-      Name:  req.body.Name,
-      description: req.body.description,
-      author: req.body.author,
-      file: {
-        data: req.file.buffer,
-        contentType: req.file.mimetype
-      }
+router.post('/add', (req, res) => {
+    console.log(req.body);
+    if(req.body?.Name && req.body?.description){
+
+        const post = new Posts({
+            _id: new mongoose.Types.ObjectId(),
+            //Name and description comes from request body which will be handled by body parser
+            Name:  req.body.Name,
+            description: req.body.description
+        })
+        
+        post.save().then(result => {
+            res.status(201).json({
+                message: "User added",
+                post: post
+            })
+        }).catch(err => console.log(err));
+    
+        res.status(200).json({
       
-    })
+          message : "Post Saved",
+          success : true
+      })
 
-    try {
-      const savedPost = await post.save();
-      res.status(201).json({
-        message: "Post saved",
-        post: savedPost
-      });
-    } catch (err) {
-      next(err);
     }
-  } else {
-    res.status(400).json({
-      message: "Invalid request",
-    });
-  }
-});
+
+    else{
+        res.status(500).json({
+            message: "Error while adding user",
+        })
+    }
+
+    
+  });
 
 
   router.get('/posts/:id', (req, res) => {
@@ -99,7 +97,6 @@ router.put('/posts/:id', (req, res) => {
       res.status(500).send({ message: `Error updating post with ID ${id}` });
     });
 });
-
 
 //Deletion of post
 router.delete('/posts/:id', async (req, res) => {
