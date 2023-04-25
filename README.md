@@ -42,7 +42,11 @@ If you'd like to contribute to Reboundr, please follow these steps:
 
 Reboundr was built by a team of talented developers:
 
-- Riya Intwala (@johndoe) 👨‍💻
+- Alis Mangukiya [@alismangukiya](https://github.com/naqeebali-shamsi) 👨‍💻
+- Anirudh Hosur [AnirudhHosur](https://github.com/AnirudhHosur) 👨‍💻
+- Mounisha Soudaboina [mounisha01_lab](https://github.com/mounisha01_lab) 👨‍💻
+- Riya Intwala [IntwalaRiya](https://github.com/IntwalaRiya) 👨‍💻
+- Yours truly [naqeebali-shamsi](https://github.com/naqeebali-shamsi) 👨‍💻
 
 ## License
 
