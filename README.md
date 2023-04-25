@@ -2,7 +2,7 @@
 
 🚀👨‍💻👩‍💻💼🔍💬
 
-![Reboundr Logo](https://i.imgur.com/wJF5g5f.png)
+![Reboundr Logo](https://github.com/naqeebali-shamsi/Reboundr/blob/main/frontend/public/favicon.ico)
 
 Reboundr is an alternative job-search and job posting web-application built on the MERN stack with a minimalist user interface. What sets Reboundr apart is its unique AI-powered mock interview feature that helps job seekers prepare for real interviews.
 
@@ -26,7 +26,7 @@ Reboundr is an alternative job-search and job posting web-application built on t
 
 ## How to Use
 
-To use Reboundr, simply visit our website at [www.rebounder.netlify.app](https://www.rebounder.netlify.app). Job seekers can create an account and use the mock interview feature to practice their interview skills, while employers can create job postings and search for qualified candidates.
+To use Reboundr, simply visit our website at [Reboundr](https://rebounder.netlify.app/). Job seekers can create an account and use the mock interview feature to practice their interview skills, while employers can create job postings and search for qualified candidates.
 
 ## Contributing
 
