@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
         if (storedToken) {
             setToken(storedToken);
         }
-        if (storedUserData) {
+        if (storedUserData && storedUserData !== "undefined") {
             setUserData(JSON.parse(storedUserData));
         }
         updateToken(storedToken);

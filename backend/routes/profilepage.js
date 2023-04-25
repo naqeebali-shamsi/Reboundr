@@ -5,8 +5,8 @@ const User = require('../Models/User');
 
 // profile add project details
 router.put('/addProjectDetails/:_id', (req, res) => {
-    var _id = req.params._id;
-    var length;
+    let _id = req.params._id;
+    let length;
     
     User.find({_id: _id}, 'project').then((result) => {
       length = result.length
@@ -26,7 +26,7 @@ router.put('/addProjectDetails/:_id', (req, res) => {
   
   // upload profile photo
   router.put('/addProfilePhoto/:_id', (req, res) => {
-    var _id = req.params._id;
+    let _id = req.params._id;
   
     User.findOneAndUpdate({_id: _id}, {$set: {
       image: req.body.image
@@ -41,7 +41,7 @@ router.put('/addProjectDetails/:_id', (req, res) => {
   
   // upload cv
   router.put('/addCV/:_id', (req, res) => {
-    var _id = req.params._id;
+    let _id = req.params._id;
   
     User.findOneAndUpdate({_id: _id}, {$set: {
       cv: req.body.cv
@@ -56,7 +56,7 @@ router.put('/addProjectDetails/:_id', (req, res) => {
   
   // update bio
   router.put('/addBio/:_id', (req, res) => {
-    var _id = req.params._id;
+    let _id = req.params._id;
   
     User.findOneAndUpdate({_id: _id}, {$set: {
       bio: req.body.bio
@@ -71,7 +71,7 @@ router.put('/addProjectDetails/:_id', (req, res) => {
   
   // get user profile details
   router.get('/getUserProfileDetails/:_id', (req, res) => {
-      var _id = req.params._id;
+      let _id = req.params._id;
       User.find({_id : _id}).then((result) => {
           res.send(result);
         }).catch((err) => {

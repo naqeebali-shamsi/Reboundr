@@ -95,7 +95,7 @@ export default function UpdateProfileData(){
         const newText = {
             "bio" : bio
         }
-        var url = `${config.baseUrl}/addBio/` + _id
+        let url = `${config.baseUrl}/addBio/` + _id
         fetch(url, {
             method: "PUT",
             headers: {"Content-Type": "application/JSON"},
@@ -114,7 +114,7 @@ export default function UpdateProfileData(){
                         "end_date" : endDate,
                         "description" : taskText,
                     }
-                    var url = `${config.baseUrl}/addEmployeeDetails/` + _id
+                    let url = `${config.baseUrl}/addEmployeeDetails/` + _id
                     fetch(url, {
                         method: "PUT",
                         headers: {"Content-Type": "application/JSON"},
@@ -139,7 +139,7 @@ export default function UpdateProfileData(){
                         "end_date" : projectEnd,
                         "description" : projectTask,
                     }
-                    var url = `${config.baseUrl}/addProjectDetails/` + _id
+                    let url = `${config.baseUrl}/addProjectDetails/` + _id
                     fetch(url, {
                         method: "PUT",
                         headers: {"Content-Type": "application/JSON"},

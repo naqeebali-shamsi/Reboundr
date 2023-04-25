@@ -87,7 +87,7 @@ export default function Profilepage() {
             let formData = new FormData();
             formData.append('cv', selectedFile)
 
-            var url = `${config.baseUrl}/addCV/` + localStorage.getItem('user')
+            let url = `${config.baseUrl}/addCV/` + localStorage.getItem('user')
             
             try {
                 axios.put(url, formData, { 

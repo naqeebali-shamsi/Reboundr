@@ -45,7 +45,7 @@ export default function Profilesection(props) {
   
   //fetching data of user using Id
   const fetchData = async () => {
-    var url = `${config.baseUrl}/getUserProfileDetails/` + userData
+    let url = `${config.baseUrl}/getUserProfileDetails/` + userData
     console.log(url)
     try {
       const response = await axios.get(url);
